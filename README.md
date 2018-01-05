@@ -28,7 +28,7 @@ compile 'com.laquysoft.bernini:bernini:0.0.1'
 
 Features
 -----
-You can download an OBJ asse and its resources from Poly using them in your applications
+You can download an OBJ asset and its resources from Poly using them in your applications
 just passing its Poly ID
 
 Usage
