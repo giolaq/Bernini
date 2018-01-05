@@ -1,5 +1,8 @@
 apply plugin: 'java-library'
 apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'org.jetbrains.dokka-android'
+apply plugin: 'maven-publish'
 
 dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
@@ -23,3 +26,9 @@ sourceSets {
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+
+dokka {
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+}
+apply from: 'deploy.gradle'
