@@ -76,13 +76,13 @@ class Bernini {
             }
 
 
-    fun asyncDownload(fileModel: FileModel) = async {
+    private fun asyncDownload(fileModel: FileModel) = async {
         val result = polyService.downloadFile(fileModel.url.drop(28)).await()
         saveFiles(fileModel.relativePath, fileModel.url, result)
         result
     }
 
-    fun asyncDownloadList(fileModels: List<FileModel>): MutableList<Deferred<ResponseBody>> {
+    private fun asyncDownloadList(fileModels: List<FileModel>): MutableList<Deferred<ResponseBody>> {
         val downloadList: MutableList<Deferred<ResponseBody>> = mutableListOf()
         fileModels.forEach { fileModel ->
             var responseBody = asyncDownload(fileModel)
