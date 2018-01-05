@@ -12,7 +12,7 @@ This library take its name from [Bernini](https://en.wikipedia.org/wiki/Gian_Lor
 Download
 --------
 
-Download [the latest JAR][2] or grab via [Maven]:
+Download the latest JAR or grab via Maven:
 ```xml
 <dependency>
   <groupId>com.laquysoft.bernini</groupId>
@@ -21,7 +21,7 @@ Download [the latest JAR][2] or grab via [Maven]:
   <type>pom</type>
 </dependency>
 ```
-or [Gradle]:
+or Gradle:
 ```groovy
 compile 'com.laquysoft.bernini:bernini:0.0.1'
 ```
@@ -51,19 +51,7 @@ calling `getModel(ASSET_ID)` with the ASSET_ID you want
             readyToImport = true
         }
 ```
-
-Your service methods can now use `Deferred` as their return type.
-```kotlin
-interface MyService {
-  @GET("/user")
-  fun getUser(): Deferred<User>
-
-  // or
-
-  @GET("/user")
-  fun getUser(): Deferred<Response<User>>
-}
-```
+This library use the coroutines experimental Kotlin's feature
 ## DEMO APP
 In the app directory there is an Android application in Kotlin using this library
 with [ARCore](https://developers.google.com/ar/)
