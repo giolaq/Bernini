@@ -47,8 +47,6 @@ calling `getModel(ASSET_ID)` with the ASSET_ID you want
                 bernini.getModel(ASSET_ID)
             }
             resourcesList = drawOrder.await()
-            Log.d("Bernini", "Daje " + resourcesList)
-            readyToImport = true
         }
 ```
 This library use the coroutines experimental Kotlin's feature
