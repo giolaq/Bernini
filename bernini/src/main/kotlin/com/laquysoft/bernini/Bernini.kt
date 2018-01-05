@@ -4,6 +4,7 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.Coroutin
 import com.laquysoft.bernini.model.Entry
 import com.laquysoft.bernini.model.FileModel
 import com.laquysoft.bernini.model.FormatModel
+import com.sun.org.apache.xpath.internal.compiler.Keywords
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import okhttp3.Interceptor
@@ -103,6 +104,11 @@ class Bernini {
         return resourcesList
     }
 
+    suspend fun listAssets(keywords: String): MutableList<String> {
+        val assets = polyService.listAssets(keywords).await()
+        assets.assetsList.forEach {  }
+        return mutableListOf()
+    }
 
 }
 
