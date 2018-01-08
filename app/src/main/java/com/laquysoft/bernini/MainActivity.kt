@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
     private val ASSET_SCALE = 0.2f
 
     private val ASSET_ID = "6b7Ul6MeLrJ"
-    private val API_KEY = "***YOUR_API_KEY***"
+    private val API_KEY = "***YOUR API KEY***"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +72,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val bernini = Bernini().withApiKey(API_KEY)
+                .withFormat("OBJ")
 
 
         // Set up tap listener.
@@ -137,6 +138,14 @@ class MainActivity : AppCompatActivity() {
             resourcesList = drawOrder.await()
             Log.d("Bernini", "Daje " + resourcesList)
             readyToImport = true
+        }
+
+        launch {
+            val assetsListOrder = async {
+                bernini.listAssets("house")
+            }
+            val assestList = assetsListOrder.await()
+            Log.d("Bernini", "Daje " + assestList)
         }
     }
 

@@ -1,9 +1,11 @@
 package com.laquysoft.bernini
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
+import com.laquysoft.bernini.model.AssetModel
 import com.laquysoft.bernini.model.Entry
 import com.laquysoft.bernini.model.FileModel
 import com.laquysoft.bernini.model.FormatModel
+import com.sun.org.apache.xpath.internal.compiler.Keywords
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
 import okhttp3.Interceptor
@@ -23,8 +25,10 @@ class Bernini {
     val polyService: PolyService
 
     private var apiKey: String = "not set"
+    private var format: String = "not set"
 
     var resourcesList: MutableList<Entry> = mutableListOf()
+    var assetsList: MutableList<String> = mutableListOf()
 
     init {
         val loggingInterceptor = HttpLoggingInterceptor()
@@ -32,7 +36,8 @@ class Bernini {
 
         val keyInterceptor = Interceptor { chain ->
             var request = chain.request()
-            val url = request.url().newBuilder().addQueryParameter("key", apiKey).build()
+            val url = request.url().newBuilder().addQueryParameter("key", apiKey)
+                    .build()
             request = request.newBuilder().url(url).build()
             chain.proceed(request)
         }
@@ -56,6 +61,10 @@ class Bernini {
         this.apiKey = apiKey
     }
 
+    fun withFormat(format: String) = fluently {
+        this.format = format
+    }
+
     private suspend fun requestDataFiles(objFormat: FormatModel) =
             async {
                 val rootFile = objFormat.root
@@ -75,14 +84,13 @@ class Bernini {
                 }
             }
 
-
-    fun asyncDownload(fileModel: FileModel) = async {
+    private fun asyncDownload(fileModel: FileModel) = async {
         val result = polyService.downloadFile(fileModel.url.drop(28)).await()
         saveFiles(fileModel.relativePath, fileModel.url, result)
         result
     }
 
-    fun asyncDownloadList(fileModels: List<FileModel>): MutableList<Deferred<ResponseBody>> {
+    private fun asyncDownloadList(fileModels: List<FileModel>): MutableList<Deferred<ResponseBody>> {
         val downloadList: MutableList<Deferred<ResponseBody>> = mutableListOf()
         fileModels.forEach { fileModel ->
             var responseBody = asyncDownload(fileModel)
@@ -103,6 +111,11 @@ class Bernini {
         return resourcesList
     }
 
+    suspend fun listAssets(keywords: String): MutableList<String> {
+        val listAssetsResponse = polyService.listAssets(keywords).await()
+        listAssetsResponse.assets.forEach { asset -> assetsList.add(asset.name) }
+        return assetsList
+    }
 
 }
 
