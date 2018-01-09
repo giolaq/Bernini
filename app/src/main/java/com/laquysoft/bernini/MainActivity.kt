@@ -17,8 +17,7 @@ import com.google.ar.core.*
 import com.google.ar.core.exceptions.UnavailableApkTooOldException
 import com.google.ar.core.exceptions.UnavailableArcoreNotInstalledException
 import com.google.ar.core.exceptions.UnavailableSdkTooOldException
-import com.laquysoft.bernini.Bernini
-import com.laquysoft.bernini.PolyService
+import com.laquysoft.bernini.api.PolyService
 import com.laquysoft.bernini.model.Entry
 import com.laquysoft.bernini.rendering.BackgroundRenderer
 import com.laquysoft.bernini.rendering.ObjectRenderer

@@ -3,15 +3,30 @@ apply plugin: 'org.jetbrains.kotlin.jvm'
 apply plugin: 'com.jfrog.bintray'
 apply plugin: 'org.jetbrains.dokka-android'
 apply plugin: 'maven-publish'
+apply plugin: 'kotlin-kapt'
 
 dependencies {
     api 'com.squareup.retrofit2:retrofit:2.3.0'
     api 'org.jetbrains.kotlin:kotlin-stdlib:1.2.10'
     api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.21'
     api 'com.jakewharton.retrofit:retrofit2-kotlin-coroutines-experimental-adapter:1.0.0'
+
+
+    // Dagger 2
+    compile 'com.google.dagger:dagger:2.13'
+    kapt 'com.google.dagger:dagger-compiler:2.13'
+
+
     implementation "com.squareup.okhttp3:okhttp:3.9.1"
     implementation "com.squareup.okhttp3:logging-interceptor:3.9.1"
     implementation "com.squareup.retrofit2:converter-gson:2.3.0"
+
+
+    // Tests
+    testCompile 'junit:junit:4.12'
+    testCompile 'com.nhaarman:mockito-kotlin:1.5.0'
+    testCompile 'org.jetbrains.spek:spek:1.0.25'
+    testCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
 }
 
@@ -22,6 +37,7 @@ kotlin {
 }
 sourceSets {
     main.java.srcDirs += 'src/main/kotlin'
+    test.java.srcDirs += 'src/test/kotlin'
 }
 
 sourceCompatibility = "1.7"
@@ -30,5 +46,11 @@ targetCompatibility = "1.7"
 dokka {
     outputFormat = 'html'
     outputDirectory = "$buildDir/javadoc"
+}
+repositories {
+    mavenCentral()
+    maven {
+        url "http://repository.jetbrains.com/all"
+    }
 }
 apply from: 'deploy.gradle'

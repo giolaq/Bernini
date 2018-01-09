@@ -1,4 +1,4 @@
-package com.laquysoft.bernini
+package com.laquysoft.bernini.api
 
 import com.laquysoft.bernini.model.AssetModel
 import com.laquysoft.bernini.model.ListAssetsResponse
@@ -15,11 +15,11 @@ import retrofit2.http.Query
 interface PolyService {
 
     @GET("/v1/assets/{assetId}/")
-    fun getAsset(@Path("assetId") assetId: String) : Deferred<AssetModel>
+    fun getAsset(@Query("key") key: String, @Path("assetId") assetId: String) : Deferred<AssetModel>
 
     @GET("/{filePath}")
-    fun downloadFile(@Path("filePath", encoded = true) filePath: String): Deferred<ResponseBody>
+    fun downloadFile(@Query("key") key: String, @Path("filePath", encoded = true) filePath: String): Deferred<ResponseBody>
 
     @GET("/v1/assets/")
-    fun listAssets(@Query("keywords") keywords: String) : Deferred<ListAssetsResponse>
+    fun listAssets(@Query("key") key: String, @Query("keywords") keywords: String) : Deferred<ListAssetsResponse>
 }
