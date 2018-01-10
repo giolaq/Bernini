@@ -14,11 +14,11 @@ class PolyRestAPI @Inject constructor(private val polyService: PolyService) : Po
     var apiKey: String = "not set"
 
     override fun getAsset(assetId: String): Deferred<AssetModel> {
-        return polyService.getAsset(apiKey, assetId)
+        return polyService.getAsset(assetId, apiKey)
     }
 
     override fun downloadFile(filePath: String): Deferred<ResponseBody> {
-        return polyService.downloadFile(apiKey, filePath)
+        return polyService.downloadFile(filePath, apiKey)
     }
 
     override fun listAssets(keywords: String): Deferred<ListAssetsResponse> {

@@ -1,19 +1,13 @@
 package com.laquysoft.bernini
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.experimental.CoroutineCallAdapterFactory
 import com.laquysoft.bernini.api.PolyRestAPI
-import com.laquysoft.bernini.api.PolyService
+import com.laquysoft.bernini.di.DaggerWrapper
 import com.laquysoft.bernini.model.Entry
 import com.laquysoft.bernini.model.FileModel
 import com.laquysoft.bernini.model.FormatModel
 import kotlinx.coroutines.experimental.Deferred
 import kotlinx.coroutines.experimental.async
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Inject
 
 /**
@@ -21,6 +15,9 @@ import javax.inject.Inject
  */
 class Bernini  {
 
+    init {
+        DaggerWrapper.component!!.inject(this)
+    }
     private var format: String = "not set"
 
     var resourcesList: MutableList<Entry> = mutableListOf()

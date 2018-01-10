@@ -15,10 +15,10 @@ import retrofit2.http.Query
 interface PolyService {
 
     @GET("/v1/assets/{assetId}/")
-    fun getAsset(@Query("key") key: String, @Path("assetId") assetId: String) : Deferred<AssetModel>
+    fun getAsset(@Path("assetId") assetId: String, @Query("key") key: String) : Deferred<AssetModel>
 
     @GET("/{filePath}")
-    fun downloadFile(@Query("key") key: String, @Path("filePath", encoded = true) filePath: String): Deferred<ResponseBody>
+    fun downloadFile(@Path("filePath", encoded = true) filePath: String, @Query("key") key: String): Deferred<ResponseBody>
 
     @GET("/v1/assets/")
     fun listAssets(@Query("key") key: String, @Query("keywords") keywords: String) : Deferred<ListAssetsResponse>
